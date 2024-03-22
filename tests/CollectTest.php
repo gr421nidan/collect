@@ -84,4 +84,28 @@ class CollectTest extends TestCase
         $this->assertCount(0, $result->toArray());
     }
 
+    public function testOnlyReturnSelectedOnes()
+    {
+        $array = ['a' => 1, 'b' => 2, 'c' => 3];
+        $collect = new Collect\Collect($array);
+        $result = $collect->only(['a', 'c']);
+        $this->assertEquals(['a' => 1, 'c' => 3], $result->toArray());
+        $this->assertSame($array, $collect->toArray());
+    }
+
+    public function testFirst()
+    {
+        $array = ['a' => 100, 'b' => 200, 'c' => 300];
+        $collect = new Collect\Collect($array);
+        $result = $collect->first();
+        $this->assertEquals(100, $result);
+        $this->assertSame($array, $collect->toArray());
+    }
+    public function testCount()
+    {
+        $collect = new Collect\Collect(['purple','white','black', 'red']);
+        $this->assertSame(4, $collect->count());
+    }
+
+
 }
