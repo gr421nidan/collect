@@ -69,6 +69,7 @@ class CollectTest extends TestCase
         $result = $collect->get();
         $this->assertEquals($array, $result);
     }
+    //Тест, на исключение элементов
     public function testExceptWithArray()
     {
         $array = ['red' => 'apple', 'yellow' => 'banana', 'green' => 'grapes'];
@@ -149,5 +150,21 @@ class CollectTest extends TestCase
         $expectedResult = [2, 4, 6, 8];
         $this->assertEquals($expectedResult, $result);
     }
+    //Тест, на добавление нового значения в конец массива, сравнение с ожидаемым результатом
+    public function testPush()
+    {
+        $collect = new Collect\Collect([1,'hi', 3, 2, 9]);
+        $collect->push('bye');
+        $this->assertSame([1,'hi', 3, 2, 9, 'bye'], $collect->toArray());
+    }
+    //Тест, на добавление нового значения в начало массива, сравнение с ожидаемым результатом
+    public function testUnshift()
+    {
+        $collect = new Collect\Collect([1, 2, 3, 4]);
+        $collect->unshift(0);
+        $this->assertSame([0, 1, 2, 3, 4], $collect->toArray());
+    }
+
+
 
 }
