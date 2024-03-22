@@ -54,7 +54,7 @@ class CollectTest extends TestCase
         $values = $collect->values();
         $this->assertEquals([], $values->toArray());
     }
-
+    //Передать значение через ключи
     public function testGetWithKey()
     {
         $array = ['a' => 'hi!', 'b' => 'bye!'];
@@ -62,6 +62,7 @@ class CollectTest extends TestCase
         $result = $collect->get('a');
         $this->assertEquals('hi!', $result);
     }
+    //Передать значение без ключей
     public function testGetWithoutKey()
     {
         $array = ['a' => 'hi!', 'b' => 'bye!'];
@@ -164,6 +165,7 @@ class CollectTest extends TestCase
         $collect->unshift(0);
         $this->assertSame([0, 1, 2, 3, 4], $collect->toArray());
     }
+    //Тест, на добавление нового значения в пустой массив, сравнение с ожидаемым результатом
     public function testUnshiftEmptyArray()
     {
         $collect = new Collect\Collect([]);
