@@ -178,6 +178,14 @@ class CollectTest extends TestCase
         $collect->pop();
         $this->assertSame(['purple','white','black'], $collect->toArray());
     }
-
+    //Тест, который проверяет вырезание по индексу и длине, сравнение с ожидаемым результатом
+    public function testSplice()
+    {
+        $array = ['purple','white','black','red'];
+        $collect = new Collect\Collect($array);
+        $collect->splice(1,2);
+        $expectedResult = ['purple','red'];
+        $this->assertSame($expectedResult, $collect->toArray());
+    }
 
 }
