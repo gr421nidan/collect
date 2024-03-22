@@ -106,6 +106,30 @@ class CollectTest extends TestCase
         $collect = new Collect\Collect(['purple','white','black', 'red']);
         $this->assertSame(4, $collect->count());
     }
+    public function testToArrayMethod()
+    {
+        $array = ['a' => 1, 'b' => 2, 'c' => 3];
+        $collect = new Collect\Collect($array);
+        $this->assertEquals($array, $collect->toArray());
+    }
 
+    public function testSearchMethod()
+    {
+        $array = [
+            ['id' => 1, 'color' => 'Blue'],
+            ['id' => 2, 'color' => 'Yellow'],
+            ['id' => 3, 'color' => 'Orange'],
+            ['id' => 4, 'color' => 'Yellow'],
+        ];
+
+        $collect = new Collect\Collect($array);
+        $result = $collect->search('color', 'Yellow')->toArray();
+        $expectedResult = [
+            ['id' => 2, 'color' => 'Yellow'],
+            ['id' => 4, 'color' => 'Yellow'],
+        ];
+
+        $this->assertEquals($expectedResult, $result);
+    }
 
 }
