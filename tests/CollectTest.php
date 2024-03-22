@@ -164,7 +164,20 @@ class CollectTest extends TestCase
         $collect->unshift(0);
         $this->assertSame([0, 1, 2, 3, 4], $collect->toArray());
     }
-
+    //Тест, на удаление 1 значения массива, сравнение с ожидаемым результатом
+    public function testShift()
+    {
+        $collect = new Collect\Collect(['a' => 1, 'b' => 2, 'c' => 3]);
+        $collect->shift();
+        $this->assertSame(['b' => 2, 'c' => 3], $collect->toArray());
+    }
+    //Тест, на удаление последнего значения массива, сравнение с ожидаемым результатом
+    public function testPop()
+    {
+        $collect = new Collect\Collect(['purple','white','black', 'red']);
+        $collect->pop();
+        $this->assertSame(['purple','white','black'], $collect->toArray());
+    }
 
 
 }
