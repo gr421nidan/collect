@@ -64,8 +64,24 @@ class CollectTest extends TestCase
         $result = $collect->get();
         $this->assertEquals($array, $result);
     }
-
-
-
+    public function testExceptWithArray()
+    {
+        $array = ['red' => 'apple', 'yellow' => 'banana', 'green' => 'grapes'];
+        $collect = new Collect\Collect($array);
+        $result = $collect->except(['red', 'yellow']);
+        $this->assertEquals(['green' => 'grapes'], $result->toArray());
+    }
+    public function testExceptCountElements()
+    {
+        $collect = new Collect\Collect(['a' => 1, 'b' => 2, 'c' => 3]);
+        $result = $collect->except('a');
+        $resultArray = $result->toArray();
+        $this->assertCount(2, $resultArray);
+    }
+    public function testExceptAllKeys(){
+        $collect = new Collect\Collect(['a' => 1, 'b' => 2, 'c' => 3]);
+        $result = $collect->except('a', 'b', 'c');
+        $this->assertCount(0, $result->toArray());
+    }
 
 }
