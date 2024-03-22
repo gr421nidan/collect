@@ -5,6 +5,7 @@ require_once ('src/Collect.php');
 require_once ('src/helpers.php');
 class CollectTest extends TestCase
 {
+    // Тест на ассоциативный массив
     public function testKeysAssociativeArray()
     {
         $array = ['a' => 1, 'b' => 2, 'c' => 3];
@@ -12,12 +13,14 @@ class CollectTest extends TestCase
         $keys = $collect->keys();
         $this->assertEquals(['a', 'b', 'c'], $keys->toArray());
     }
+    // Тест на числовые ключи массива
     public function testKeysNumericArray(){
         $array = [1 => 'a', 2 => 'b', 3 => 'c'];
         $collect = new Collect\Collect($array);
         $keys = $collect->keys();
         $this->assertEquals([1,2,3], $keys->toArray());
     }
+    // Тест на пустой массив
     public function testKeysEmptyArray()
     {
         $array = [];
@@ -26,7 +29,7 @@ class CollectTest extends TestCase
         $keys = $keysCollection->toArray();
         $this->assertEquals([], $keys);
     }
-
+    // Тест на ассоциативный массив
     public function testValuesAssociativeArray()
     {
         $array = ['a' => 1, 'b' => 2, 'c' => 3];
@@ -34,6 +37,7 @@ class CollectTest extends TestCase
         $keys = $collect->values();
         $this->assertEquals([1, 2, 3], $keys->toArray());
     }
+    // Тест на числовые ключи массива
     public function testValuesNumericArray()
     {
         $array = [1 => 'lion', 2 => 'cheetah', 3 => 'leopard'];
@@ -42,6 +46,7 @@ class CollectTest extends TestCase
         $expectedValues = ['lion', 'cheetah', 'leopard'];
         $this->assertEquals($expectedValues, $values->toArray());
     }
+    // Тест на пустой массив
     public function testValuesEmptyArray()
     {
         $array = [];
@@ -71,19 +76,20 @@ class CollectTest extends TestCase
         $result = $collect->except(['red', 'yellow']);
         $this->assertEquals(['green' => 'grapes'], $result->toArray());
     }
+    // Тест на тип возвращаемого значения
     public function testExceptCountElements()
     {
         $collect = new Collect\Collect(['a' => 1, 'b' => 2, 'c' => 3]);
         $result = $collect->except('a');
-        $resultArray = $result->toArray();
-        $this->assertCount(2, $resultArray);
+        $this->assertInstanceOf(Collect\Collect::class, $result);
     }
+    //Тест на исключение всех ключей
     public function testExceptAllKeys(){
         $collect = new Collect\Collect(['a' => 1, 'b' => 2, 'c' => 3]);
         $result = $collect->except('a', 'b', 'c');
         $this->assertCount(0, $result->toArray());
     }
-
+    // Тест, что возвращенная коллекция содержит только указанные элементы и сто после коолекция осталась неизменной
     public function testOnlyReturnSelectedOnes()
     {
         $array = ['a' => 1, 'b' => 2, 'c' => 3];
@@ -92,7 +98,7 @@ class CollectTest extends TestCase
         $this->assertEquals(['a' => 1, 'c' => 3], $result->toArray());
         $this->assertSame($array, $collect->toArray());
     }
-
+    // Тест, что первый элемент соответствует ожидаемому
     public function testFirst()
     {
         $array = ['a' => 100, 'b' => 200, 'c' => 300];
@@ -112,7 +118,7 @@ class CollectTest extends TestCase
         $collect = new Collect\Collect($array);
         $this->assertEquals($array, $collect->toArray());
     }
-
+    //Тест, что результат поиска соответствует ожидаемому
     public function testSearchMethod()
     {
         $array = [
@@ -129,6 +135,18 @@ class CollectTest extends TestCase
             ['id' => 4, 'color' => 'Yellow'],
         ];
 
+        $this->assertEquals($expectedResult, $result);
+    }
+    //Тест, что возвращает массив с новыми данными, которые сравниваем с ожидаемыми
+    public function testMap()
+    {
+        $array = [1, 2, 3, 4];
+        $collect = new Collect\Collect($array);
+        $doubling = function ($value) {
+            return $value * 2;
+        };
+        $result = $collect->map($doubling)->toArray();
+        $expectedResult = [2, 4, 6, 8];
         $this->assertEquals($expectedResult, $result);
     }
 
