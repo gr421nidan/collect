@@ -164,6 +164,12 @@ class CollectTest extends TestCase
         $collect->unshift(0);
         $this->assertSame([0, 1, 2, 3, 4], $collect->toArray());
     }
+    public function testUnshiftEmptyArray()
+    {
+        $collect = new Collect\Collect([]);
+        $collect->unshift('Hi');
+        $this->assertSame(['Hi'], $collect->toArray());
+    }
     //Тест, на удаление 1 значения массива, сравнение с ожидаемым результатом
     public function testShift()
     {
