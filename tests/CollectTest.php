@@ -34,8 +34,8 @@ class CollectTest extends TestCase
     {
         $array = ['a' => 1, 'b' => 2, 'c' => 3];
         $collect = new Collect\Collect($array);
-        $keys = $collect->values();
-        $this->assertEquals([1, 2, 3], $keys->toArray());
+        $values = $collect->values();
+        $this->assertEquals([1, 2, 3], $values->toArray());
     }
     // Тест на числовые ключи массива
     public function testValuesNumericArray()
@@ -91,14 +91,14 @@ class CollectTest extends TestCase
         $result = $collect->except('a', 'b', 'c');
         $this->assertCount(0, $result->toArray());
     }
-    // Тест, что возвращенная коллекция содержит только указанные элементы и сто после коолекция осталась неизменной
+    // Тест, что возвращенная коллекция содержит только указанные элементы и что после, коолекция осталась неизменной
     public function testOnlyReturnSelectedOnes()
     {
         $array = ['a' => 1, 'b' => 2, 'c' => 3];
         $collect = new Collect\Collect($array);
         $result = $collect->only(['a', 'c']);
         $this->assertEquals(['a' => 1, 'c' => 3], $result->toArray());
-        $this->assertSame($array, $collect->toArray());
+        $this->assertEquals($array, $collect->toArray());
     }
     // Тест, что первый элемент соответствует ожидаемому
     public function testFirst()
@@ -107,12 +107,12 @@ class CollectTest extends TestCase
         $collect = new Collect\Collect($array);
         $result = $collect->first();
         $this->assertEquals(100, $result);
-        $this->assertSame($array, $collect->toArray());
+        $this->assertEquals($array, $collect->toArray());
     }
     public function testCount()
     {
         $collect = new Collect\Collect(['purple','white','black', 'red']);
-        $this->assertSame(4, $collect->count());
+        $this->assertEquals(4, $collect->count());
     }
     public function testToArrayMethod()
     {
@@ -156,35 +156,35 @@ class CollectTest extends TestCase
     {
         $collect = new Collect\Collect([1,'hi', 3, 2, 9]);
         $collect->push('bye');
-        $this->assertSame([1,'hi', 3, 2, 9, 'bye'], $collect->toArray());
+        $this->assertEquals([1,'hi', 3, 2, 9, 'bye'], $collect->toArray());
     }
     //Тест, на добавление нового значения в начало массива, сравнение с ожидаемым результатом
     public function testUnshift()
     {
         $collect = new Collect\Collect([1, 2, 3, 4]);
         $collect->unshift(0);
-        $this->assertSame([0, 1, 2, 3, 4], $collect->toArray());
+        $this->assertEquals([0, 1, 2, 3, 4], $collect->toArray());
     }
     //Тест, на добавление нового значения в пустой массив, сравнение с ожидаемым результатом
     public function testUnshiftEmptyArray()
     {
         $collect = new Collect\Collect([]);
         $collect->unshift('Hi');
-        $this->assertSame(['Hi'], $collect->toArray());
+        $this->assertEquals(['Hi'], $collect->toArray());
     }
     //Тест, на удаление 1 значения массива, сравнение с ожидаемым результатом
     public function testShift()
     {
         $collect = new Collect\Collect(['a' => 1, 'b' => 2, 'c' => 3]);
         $collect->shift();
-        $this->assertSame(['b' => 2, 'c' => 3], $collect->toArray());
+        $this->assertEquals(['b' => 2, 'c' => 3], $collect->toArray());
     }
     //Тест, на удаление последнего значения массива, сравнение с ожидаемым результатом
     public function testPop()
     {
         $collect = new Collect\Collect(['purple','white','black', 'red']);
         $collect->pop();
-        $this->assertSame(['purple','white','black'], $collect->toArray());
+        $this->assertEquals(['purple','white','black'], $collect->toArray());
     }
     //Тест, который проверяет вырезание по индексу и длине, сравнение с ожидаемым результатом
     public function testSplice()
@@ -193,7 +193,15 @@ class CollectTest extends TestCase
         $collect = new Collect\Collect($array);
         $collect->splice(1,2);
         $expectedResult = ['purple','red'];
-        $this->assertSame($expectedResult, $collect->toArray());
+        $this->assertEquals($expectedResult, $collect->toArray());
     }
-
+    //Тест, который проверяет вырезание по индексу, сравнение с ожидаемым результатом
+    public function testSpliceWithOnlyIndex()
+    {
+        $array = ['purple','white','black','red'];
+        $collect = new Collect\Collect($array);
+        $collect->splice(2);
+        $expectedResult = ['purple','white'];
+        $this->assertEquals($expectedResult, $collect->toArray());
+    }
 }
