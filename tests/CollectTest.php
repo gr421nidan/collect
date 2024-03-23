@@ -191,7 +191,7 @@ class CollectTest extends TestCase
     {
         $array = ['purple','white','black','red'];
         $collect = new Collect\Collect($array);
-        $collect->splice(1,2);
+        $collect->splice([1,2]);
         $expectedResult = ['purple','red'];
         $this->assertEquals($expectedResult, $collect->toArray());
     }
@@ -200,7 +200,7 @@ class CollectTest extends TestCase
     {
         $array = ['purple','white','black','red'];
         $collect = new Collect\Collect($array);
-        $collect->splice(2);
+        $collect->splice([2]);
         $expectedResult = ['purple','white'];
         $this->assertEquals($expectedResult, $collect->toArray());
     }
